@@ -1,12 +1,19 @@
 #include <stdio.h>
+#include <windows.h>
+
 
 void writeInFile(char my_char){
     FILE *f;
-    f = fopen("./test.txt", "a");
+    f = fopen("./test.txt", "a+");
     if(f == NULL)
         printf("File did not open");
     else{
-        fprintf(f, "%c", my_char);
+        if(my_char == 8)
+            fseek(f, -5, SEEK_CUR);
+        else
+            fprintf(f, "%c", my_char);
+
+        printf("pos = %ld\n\n", ftell(f));
         fclose(f);
     }
 }
@@ -29,6 +36,7 @@ void gettingKeys(){
 }
 
 int main() {
+    FreeConsole();
     gettingKeys();
 
 }
